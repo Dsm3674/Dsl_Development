@@ -1,326 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSL /// DEVELOPMENT — Data-Driven Design</title>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DSL DEVELOPMENT</title>
 
-    body {
-      font-family: 'Courier Prime', monospace;
-      background: #f5f0e8;
-      color: #000;
-      overflow-x: hidden;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    .noise {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.04;
-      z-index: 1000;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      animation: grain 0.3s steps(3) infinite;
-    }
+<style>
+:root {
+  --bg: #0b0d10;
+  --fg: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22d3ee;
+  --border: #1f2937;
+}
 
-    @keyframes grain {
-      0%, 100% { transform: translate(0, 0); }
-      25% { transform: translate(-1%, 1%); }
-      50% { transform: translate(1%, -1%); }
-      75% { transform: translate(-1%, -1%); }
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: #f5f0e8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3000;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    #loading-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+}
 
-    .loading-content {
-      text-align: center;
-      max-width: 900px;
-    }
+a {
+  color: var(--fg);
+  text-decoration: none;
+}
 
-    .loading-step {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 7vw, 6rem);
-      font-weight: 700;
-      text-transform: uppercase;
-      line-height: 1.05;
-    }
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 32px;
+}
 
-    .loading-bar {
-      height: 6px;
-      width: 0%;
-      background: #000;
-      margin-top: 40px;
-      transition: width 0.4s ease;
-    }
+/* ---------- LOADING ---------- */
 
-    .hero {
-      min-height: 100vh;
-      padding: 60px 40px;
-      position: relative;
-      background: linear-gradient(135deg, #f5f0e8 0%, #fffbf0 100%);
-      border-bottom: 10px solid #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
 
-    .crown {
-      position: absolute;
-      top: 40px;
-      left: 40px;
-      animation: float 3s ease-in-out infinite;
-    }
+.loader-text {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
 
-    .crown svg {
-      width: 120px;
-      height: 100px;
-      stroke: #000;
-      stroke-width: 8;
-      fill: #ffeb3b;
-      filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.3));
-    }
+/* ---------- HEADER ---------- */
 
-    .hero-content {
-      max-width: 1400px;
-      text-align: center;
-    }
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(11,13,16,0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
 
-    .hero-title {
-      font-size: clamp(4rem, 15vw, 18vw);
-      font-weight: 700;
-      line-height: 0.9;
-      text-transform: uppercase;
-      margin-bottom: 60px;
-    }
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 72px;
+}
 
-    .strikethrough {
-      text-decoration: line-through;
-      text-decoration-thickness: 10px;
-      color: #e74c3c;
-    }
+.logo {
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
 
-    .highlight {
-      background: #ffeb3b;
-      padding: 10px 30px;
-      display: inline-block;
-      transform: rotate(-1.5deg);
-      box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
-    }
+.nav-links a {
+  margin-left: 32px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
 
-    .underline-text {
-      border-bottom: 10px solid #000;
-      display: inline-block;
-    }
+.nav-links a:hover {
+  color: var(--fg);
+}
 
-    .sketch-box {
-      border: 6px solid #000;
-      background: #fff;
-      padding: 50px;
-      margin: 60px auto;
-      max-width: 1000px;
-      transform: rotate(-0.8deg);
-      box-shadow: 12px 12px 0 rgba(0,0,0,0.15);
-    }
+/* ---------- HERO ---------- */
 
-    .motto-big {
-      font-size: clamp(2rem, 4vw, 4em);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
 
-    .section {
-      padding: 120px 40px;
-      border-bottom: 10px solid #000;
-    }
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  max-width: 900px;
+}
 
-    .section-alt {
-      background: #fff;
-    }
+.hero p {
+  margin-top: 24px;
+  max-width: 600px;
+  color: var(--muted);
+}
 
-    .section-header {
-      font-size: clamp(3rem, 6vw, 6em);
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 40px;
-      line-height: 1;
-    }
+/* ---------- GRID SECTIONS ---------- */
 
-    .grid-chaos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-    }
+.section {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+}
 
-    .card-basquiat {
-      border: 6px solid #000;
-      padding: 50px;
-      background: #fff;
-      transition: transform 0.4s ease;
-    }
+.section-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
 
-    .card-basquiat:hover {
-      transform: scale(1.05);
-    }
+.section h2 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  max-width: 700px;
+  margin-bottom: 48px;
+}
 
-    .card-number {
-      font-size: 6em;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 40px;
+}
 
-    .card-title {
-      font-size: 2.2em;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      text-decoration: underline;
-      text-decoration-thickness: 4px;
-    }
+.card {
+  border: 1px solid var(--border);
+  padding: 32px;
+  background: linear-gradient(180deg, #0b0d10, #0f172a);
+}
 
-    .contact-section {
-      background: #000;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
 
-    .contact-title {
-      font-size: clamp(3rem, 10vw, 10em);
-      font-weight: 700;
-      text-transform: uppercase;
-      line-height: 0.95;
-      margin-bottom: 80px;
-    }
+.card p {
+  color: var(--muted);
+}
 
-    .contact-btn {
-      font-size: 2.8em;
-      font-weight: 700;
-      background: #ffeb3b;
-      color: #000;
-      padding: 35px 70px;
-      border: 6px solid #000;
-      text-decoration: none;
-    }
+/* ---------- DATA PANEL ---------- */
 
-    .map-section {
-      height: 100vh;
-      border: 12px solid #000;
-    }
+.data-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 32px;
+  margin-top: 64px;
+}
 
-    .map-section iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+.metric {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
 
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-  </style>
+.metric span {
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: block;
+}
+
+.metric label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ---------- MAP ---------- */
+
+.map {
+  height: 400px;
+  border: 1px solid var(--border);
+  margin-top: 64px;
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) contrast(1.1);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+  padding: 80px 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 32px;
+  color: var(--muted);
+}
+
+footer strong {
+  color: var(--fg);
+}
+
+/* ---------- MOTION ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none;
+    transition: none;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div id="loading-screen">
-    <div class="loading-content">
-      <div class="loading-step" id="loadingText">Collecting Signals</div>
-      <div class="loading-bar" id="loadingBar"></div>
-    </div>
+
+<div id="loader">
+  <div class="loader-text" id="loaderText">Initializing Systems</div>
+</div>
+
+<header>
+  <div class="container nav">
+    <div class="logo">DSL</div>
+    <nav class="nav-links">
+      <a href="#mission">Mission</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#data">Data</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
+</header>
 
-  <div class="noise"></div>
+<section class="hero">
+  <div class="container">
+    <h1>Engineering clarity from complex data systems.</h1>
+    <p>
+      DSL Development builds data-driven platforms for local and enterprise-scale
+      decision making.
+    </p>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="crown">
-      <svg viewBox="0 0 120 100">
-        <rect x="10" y="70" width="100" height="20"/>
-        <path d="M15 70 L35 15 L45 70 Z"/>
-        <path d="M45 70 L60 5 L75 70 Z"/>
-        <path d="M75 70 L85 15 L105 70 Z"/>
-      </svg>
-    </div>
-    <div class="hero-content">
-      <h1 class="hero-title">
-        <span class="strikethrough">DSL</span><br>
-        <span class="highlight">DATA</span><br>
-        <span class="underline-text">DEV</span>
-      </h1>
-      <div class="sketch-box">
-        <div class="motto-big">Support // Local Business ★ Data ★</div>
-        <p style="font-size:1.5em;font-weight:700;margin-top:20px;">Dallas • Irving • Texas</p>
+<section class="section" id="mission">
+  <div class="container reveal">
+    <div class="section-title">Mission</div>
+    <h2>Design is not aesthetic. It is operational.</h2>
+    <p class="muted">
+      We treat interfaces as analytical instruments—built to inform, not impress.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="capabilities">
+  <div class="container reveal">
+    <div class="section-title">Capabilities</div>
+    <h2>From raw signals to operational insight.</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Web Platforms</h3>
+        <p>High-performance interfaces designed for clarity and longevity.</p>
+      </div>
+      <div class="card">
+        <h3>Analytics</h3>
+        <p>Behavioral, operational, and performance analytics pipelines.</p>
+      </div>
+      <div class="card">
+        <h3>Visualization</h3>
+        <p>Dashboards that reflect reality, not decoration.</p>
+      </div>
+      <div class="card">
+        <h3>Optimization</h3>
+        <p>Iterative experimentation and measurable improvement.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section section-alt">
-    <h2 class="section-header">Services</h2>
-    <div class="grid-chaos">
-      <div class="card-basquiat"><div class="card-number">01</div><h3 class="card-title">Web Dev</h3></div>
-      <div class="card-basquiat"><div class="card-number">02</div><h3 class="card-title">Analytics</h3></div>
-      <div class="card-basquiat"><div class="card-number">03</div><h3 class="card-title">Insights</h3></div>
+<section class="section" id="data">
+  <div class="container reveal">
+    <div class="section-title">Live Metrics</div>
+    <h2>Systems are measured, not assumed.</h2>
+
+    <div class="data-panel">
+      <div class="metric">
+        <span id="m1">0</span>
+        <label>Sessions</label>
+      </div>
+      <div class="metric">
+        <span id="m2">0</span>
+        <label>Avg Duration</label>
+      </div>
+      <div class="metric">
+        <span id="m3">0</span>
+        <label>Page Views</label>
+      </div>
     </div>
-  </section>
 
-  <section class="contact-section">
-    <div style="text-align:center;">
-      <h2 class="contact-title">Let’s Create</h2>
-      <a class="contact-btn" href="https://www.instagram.com/dsl.development/" target="_blank">@DSL.DEV</a>
+    <div class="map">
+      <iframe src="https://www.google.com/maps?q=Irving,+TX&output=embed"></iframe>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="map-section">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107187.51589392515!2d-97.00892773828125!3d32.86397705"></iframe>
-  </section>
+<section class="section" id="contact">
+  <div class="container reveal">
+    <div class="section-title">Contact</div>
+    <h2>Let’s build systems that last.</h2>
+    <p>
+      <strong>Dallas • Irving • Texas</strong><br>
+      instagram.com/dsl.development
+    </p>
+  </div>
+</section>
 
-  <script>
-    const steps = ["Collecting Signals","Structuring Data","Generating Insight"];
-    let i = 0;
-    const text = document.getElementById("loadingText");
-    const bar = document.getElementById("loadingBar");
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <strong>DSL Development</strong><br>
+      Data-Driven Systems
+    </div>
+    <div>
+      Stack<br>
+      HTML · CSS · JavaScript
+    </div>
+    <div>
+      Built for clarity, not noise.
+    </div>
+  </div>
+</footer>
 
-    function advance() {
-      i++;
-      if (i < steps.length) {
-        text.textContent = steps[i];
-        bar.style.width = `${(i + 1) / steps.length * 100}%`;
-        setTimeout(advance, 600);
-      } else {
-        setTimeout(() => {
-          document.getElementById("loading-screen").classList.add("hidden");
-        }, 500);
-      }
+<script>
+const loaderSteps = ["Initializing Systems","Collecting Signals","Structuring Data","Generating Insight"];
+let step = 0;
+const loaderText = document.getElementById("loaderText");
+
+setInterval(() => {
+  step++;
+  if (step < loaderSteps.length) {
+    loaderText.textContent = loaderSteps[step];
+  } else {
+    document.getElementById("loader").classList.add("hidden");
+  }
+}, 700);
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add("visible");
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+function animate(id, target) {
+  let val = 0;
+  const el = document.getElementById(id);
+  const interval = setInterval(() => {
+    val += target / 60;
+    if (val >= target) {
+      el.textContent = Math.floor(target);
+      clearInterval(interval);
+    } else {
+      el.textContent = Math.floor(val);
     }
+  }, 16);
+}
 
-    window.addEventListener("load", () => {
-      bar.style.width = "33%";
-      setTimeout(advance, 600);
-    });
-  </script>
+setTimeout(() => {
+  animate("m1", 1547);
+  animate("m2", 4.2);
+  animate("m3", 3894);
+}, 2000);
+</script>
+
 </body>
 </html>
+
+
