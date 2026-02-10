@@ -17,22 +17,63 @@
     }
 
     .noise {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; opacity: 0.04; z-index: 1000;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      z-index: 1000;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       animation: grain 0.3s steps(3) infinite;
     }
 
     @keyframes grain {
       0%, 100% { transform: translate(0, 0); }
-      10% { transform: translate(-1%, -1%); }
-      20% { transform: translate(1%, 1%); }
-      30% { transform: translate(-1%, 1%); }
-      40% { transform: translate(1%, -1%); }
+      25% { transform: translate(-1%, 1%); }
+      50% { transform: translate(1%, -1%); }
+      75% { transform: translate(-1%, -1%); }
+    }
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #f5f0e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-content {
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .loading-step {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+
+    .loading-bar {
+      height: 6px;
+      width: 0%;
+      background: #000;
+      margin-top: 40px;
+      transition: width 0.4s ease;
     }
 
     .hero {
-      min-height: 100vh; padding: 60px 40px; position: relative;
+      min-height: 100vh;
+      padding: 60px 40px;
+      position: relative;
       background: linear-gradient(135deg, #f5f0e8 0%, #fffbf0 100%);
       border-bottom: 10px solid #000;
       display: flex;
@@ -48,17 +89,23 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-10px) rotate(2deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .crown svg {
-      width: 120px; height: 100px; stroke: #000; stroke-width: 8;
-      fill: #ffeb3b; stroke-linecap: round; stroke-linejoin: round;
+      width: 120px;
+      height: 100px;
+      stroke: #000;
+      stroke-width: 8;
+      fill: #ffeb3b;
       filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.3));
     }
 
-    .hero-content { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; }
+    .hero-content {
+      max-width: 1400px;
+      text-align: center;
+    }
 
     .hero-title {
       font-size: clamp(4rem, 15vw, 18vw);
@@ -66,25 +113,12 @@
       line-height: 0.9;
       text-transform: uppercase;
       margin-bottom: 60px;
-      animation: slideIn 0.8s ease-out;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
     }
 
     .strikethrough {
       text-decoration: line-through;
       text-decoration-thickness: 10px;
       color: #e74c3c;
-      display: inline-block;
-      animation: strikeAnim 0.6s ease-out 0.3s backwards;
-    }
-
-    @keyframes strikeAnim {
-      from { text-decoration-color: transparent; }
-      to { text-decoration-color: #e74c3c; }
     }
 
     .highlight {
@@ -93,81 +127,43 @@
       display: inline-block;
       transform: rotate(-1.5deg);
       box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .highlight:hover {
-      transform: rotate(1deg) scale(1.05);
     }
 
     .underline-text {
       border-bottom: 10px solid #000;
       display: inline-block;
-      padding-bottom: 5px;
     }
 
     .sketch-box {
       border: 6px solid #000;
       background: #fff;
       padding: 50px;
-      margin: 60px 0;
-      position: relative;
+      margin: 60px auto;
+      max-width: 1000px;
       transform: rotate(-0.8deg);
       box-shadow: 12px 12px 0 rgba(0,0,0,0.15);
-      transition: transform 0.4s ease;
-    }
-
-    .sketch-box:hover {
-      transform: rotate(0.5deg) scale(1.02);
     }
 
     .motto-big {
       font-size: clamp(2rem, 4vw, 4em);
       font-weight: 700;
-      line-height: 1.2;
       text-transform: uppercase;
-      margin: 40px 0;
-    }
-
-    .word {
-      display: inline-block;
-      margin: 10px;
-      transition: transform 0.3s ease;
-      cursor: default;
-    }
-
-    .word:hover {
-      transform: scale(1.1) rotate(-2deg);
-    }
-
-    .red-text { color: #e74c3c; }
-    .blue-text { color: #3498db; }
-    .yellow-bg {
-      background: #ffeb3b;
-      padding: 8px 20px;
-      box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-    }
-    .box-outline {
-      border: 4px solid #000;
-      padding: 8px 15px;
-      display: inline-block;
-      margin: 5px;
-      background: #fff;
     }
 
     .section {
       padding: 120px 40px;
       border-bottom: 10px solid #000;
-      position: relative;
     }
 
-    .section-alt { background: #fff; }
+    .section-alt {
+      background: #fff;
+    }
 
     .section-header {
       font-size: clamp(3rem, 6vw, 6em);
       font-weight: 700;
-      margin-bottom: 40px;
       text-transform: uppercase;
+      margin-bottom: 40px;
       line-height: 1;
     }
 
@@ -175,47 +171,23 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
-      margin-top: 80px;
     }
 
     .card-basquiat {
       border: 6px solid #000;
       padding: 50px;
       background: #fff;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-    }
-
-    .card-basquiat::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .card-basquiat:hover::before {
-      left: 100%;
+      transition: transform 0.4s ease;
     }
 
     .card-basquiat:hover {
-      transform: rotate(0deg) scale(1.05) translateY(-10px);
-      box-shadow: 15px 15px 0 rgba(0,0,0,0.3);
-      z-index: 10;
+      transform: scale(1.05);
     }
 
     .card-number {
       font-size: 6em;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 25px;
-      opacity: 0.9;
       font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
     }
 
     .card-title {
@@ -225,467 +197,129 @@
       margin-bottom: 20px;
       text-decoration: underline;
       text-decoration-thickness: 4px;
-      line-height: 1.1;
-    }
-
-    .card-basquiat p {
-      font-size: 1.1em;
-      line-height: 1.6;
     }
 
     .contact-section {
-      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+      background: #000;
       color: #fff;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-section::before {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: #ffeb3b;
-      border-radius: 50%;
-      top: -200px;
-      right: -200px;
-      opacity: 0.1;
-      animation: pulse 4s ease-in-out infinite;
-    }
-
-    .contact-section::after {
-      content: '';
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      background: #e74c3c;
-      border-radius: 50%;
-      bottom: -150px;
-      left: -150px;
-      opacity: 0.1;
-      animation: pulse 5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    .contact-content {
-      position: relative;
-      z-index: 2;
     }
 
     .contact-title {
       font-size: clamp(3rem, 10vw, 10em);
       font-weight: 700;
-      line-height: 0.95;
       text-transform: uppercase;
+      line-height: 0.95;
       margin-bottom: 80px;
     }
 
     .contact-btn {
-      display: inline-block;
       font-size: 2.8em;
       font-weight: 700;
-      color: #000;
       background: #ffeb3b;
-      text-decoration: none;
+      color: #000;
       padding: 35px 70px;
       border: 6px solid #000;
-      text-transform: uppercase;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 8px 8px 0 rgba(255,255,255,0.2);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-btn::before {
-      content: '→';
-      position: absolute;
-      right: 30px;
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    .contact-btn:hover {
-      transform: rotate(-2deg) scale(1.08) translateY(-5px);
-      background: #fff;
-      box-shadow: 12px 12px 0 rgba(255,235,59,0.5);
-    }
-
-    .contact-btn:hover::before {
-      opacity: 1;
-      right: 20px;
+      text-decoration: none;
     }
 
     .map-section {
-      position: relative;
       height: 100vh;
       border: 12px solid #000;
-      overflow: hidden;
     }
 
     .map-section iframe {
       width: 100%;
       height: 100%;
       border: none;
-      filter: grayscale(0.3) contrast(1.1);
     }
 
-    .map-label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-3deg);
-      background: #ffeb3b;
-      border: 6px solid #000;
-      padding: 50px 80px;
-      font-size: 3.5em;
-      font-weight: 700;
-      text-transform: uppercase;
-      box-shadow: 15px 15px 0 rgba(0,0,0,0.4);
-      z-index: 10;
-      animation: mapLabel 0.6s ease-out;
-      pointer-events: none;
-    }
-
-    @keyframes mapLabel {
-      from {
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(-3deg) scale(0.8);
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
       }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%) rotate(-3deg) scale(1);
-      }
-    }
-
-    #data-section {
-      background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
-      border-top: 10px solid #000;
-      border-bottom: 10px solid #000;
-    }
-
-    #trafficChart {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin-top: 60px;
-    }
-
-    .stat-box {
-      background: #fff;
-      border: 5px solid #000;
-      padding: 30px;
-      text-align: center;
-      transform: rotate(-1deg);
-      transition: transform 0.3s ease;
-    }
-
-    .stat-box:hover {
-      transform: rotate(1deg) scale(1.05);
-    }
-
-    .stat-number {
-      font-size: 3em;
-      font-weight: 700;
-      color: #e74c3c;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 1.1em;
-      text-transform: uppercase;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .hero { padding: 40px 20px; }
-      .section { padding: 80px 20px; }
-      .sketch-box { padding: 30px; }
-      .contact-btn { font-size: 1.8em; padding: 25px 50px; }
-      .grid-chaos { grid-template-columns: 1fr; }
-      .crown { top: 20px; left: 20px; }
-      .crown svg { width: 80px; height: 65px; }
     }
   </style>
 </head>
 
 <body>
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-step" id="loadingText">Collecting Signals</div>
+      <div class="loading-bar" id="loadingBar"></div>
+    </div>
+  </div>
+
   <div class="noise"></div>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="crown">
       <svg viewBox="0 0 120 100">
-        <rect x="10" y="70" width="100" height="20" fill="#ffeb3b" stroke="#000" stroke-width="8"/>
-        <path d="M15 70 L35 15 L45 70 Z" fill="#ffeb3b" stroke="#000" stroke-width="8"/>
-        <path d="M45 70 L60 5 L75 70 Z" fill="#ffeb3b" stroke="#000" stroke-width="8"/>
-        <path d="M75 70 L85 15 L105 70 Z" fill="#ffeb3b" stroke="#000" stroke-width="8"/>
-        <circle cx="35" cy="25" r="8" fill="#e74c3c" stroke="#000" stroke-width="3"/>
-        <circle cx="60" cy="15" r="8" fill="#3498db" stroke="#000" stroke-width="3"/>
-        <circle cx="85" cy="25" r="8" fill="#e74c3c" stroke="#000" stroke-width="3"/>
+        <rect x="10" y="70" width="100" height="20"/>
+        <path d="M15 70 L35 15 L45 70 Z"/>
+        <path d="M45 70 L60 5 L75 70 Z"/>
+        <path d="M75 70 L85 15 L105 70 Z"/>
       </svg>
     </div>
-
     <div class="hero-content">
       <h1 class="hero-title">
         <span class="strikethrough">DSL</span><br>
         <span class="highlight">DATA</span><br>
         <span class="underline-text">DEV</span>
       </h1>
-
       <div class="sketch-box">
-        <div class="motto-big">
-          <span class="word red-text">SUPPORT</span>
-          <span class="word blue-text">//</span>
-          <span class="word yellow-bg">LOCAL</span>
-          <span class="word">BUSINESS</span>
-          <span class="word box-outline">★ DATA ★</span>
-        </div>
-        <p style="font-size:1.5em;margin-top:30px;font-weight:700;">
-          Dallas • Irving • Texas
-        </p>
+        <div class="motto-big">Support // Local Business ★ Data ★</div>
+        <p style="font-size:1.5em;font-weight:700;margin-top:20px;">Dallas • Irving • Texas</p>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
   <section class="section section-alt">
-    <div style="max-width:1400px;margin:0 auto;">
-      <h2 class="section-header">
-        <span class="strikethrough" style="color:#e74c3c;">SERVICES</span><br>
-        <span style="background:#3498db;color:#fff;padding:10px 30px;">WHAT WE DO</span>
-      </h2>
-      <div class="grid-chaos">
-        <div class="card-basquiat" style="background:#ffeb3b;">
-          <div class="card-number">01</div>
-          <h3 class="card-title">WEB DEV</h3>
-          <p>Custom websites & data-driven dashboards tailored to each client.</p>
-        </div>
-
-        <div class="card-basquiat" style="background:#fff;">
-          <div class="card-number" style="color:#e74c3c;">02</div>
-          <h3 class="card-title">DATA ANALYTICS</h3>
-          <p>Tracking engagement metrics and performance using Python & JS.</p>
-        </div>
-
-        <div class="card-basquiat" style="background:#3498db;color:#fff;">
-          <div class="card-number">03</div>
-          <h3 class="card-title" style="text-decoration-color:#fff;">INSIGHT VISUALS</h3>
-          <p>Interactive dashboards with Chart.js, D3.js, and Google APIs.</p>
-        </div>
-
-        <div class="card-basquiat" style="background:#fff;">
-          <div class="card-number" style="color:#3498db;">04</div>
-          <h3 class="card-title">OPTIMIZATION</h3>
-          <p>Using A/B testing and analytics to boost site performance.</p>
-        </div>
-
-        <div class="card-basquiat" style="background:#e74c3c;color:#fff;">
-          <div class="card-number">05</div>
-          <h3 class="card-title" style="text-decoration-color:#fff;">MACHINE LEARNING</h3>
-          <p>Integrating APIs for predictive insights & local market trends.</p>
-        </div>
-
-        <div class="card-basquiat" style="background:#fff;">
-          <div class="card-number" style="color:#3498db;">06</div>
-          <h3 class="card-title">SUPPORT</h3>
-          <p>End-to-end data collection, analysis, and visualization.</p>
-        </div>
-      </div>
+    <h2 class="section-header">Services</h2>
+    <div class="grid-chaos">
+      <div class="card-basquiat"><div class="card-number">01</div><h3 class="card-title">Web Dev</h3></div>
+      <div class="card-basquiat"><div class="card-number">02</div><h3 class="card-title">Analytics</h3></div>
+      <div class="card-basquiat"><div class="card-number">03</div><h3 class="card-title">Insights</h3></div>
     </div>
   </section>
 
-  <!-- DATA INSIGHTS -->
-  <section class="section section-alt" id="data-section">
-    <div style="max-width:1200px;margin:0 auto;text-align:center;">
-      <h2 class="section-header">
-        <span class="strikethrough" style="color:#3498db;">DATA</span>
-        <span style="background:#ffeb3b;padding:10px 30px;">INSIGHTS</span>
-      </h2>
-      <p style="font-size:1.4em;margin-bottom:50px;font-weight:700;">
-        Live analytics from <span class="red-text">user traffic</span> and <span class="blue-text">engagement metrics</span>.
-      </p>
-
-      <div class="stat-grid">
-        <div class="stat-box">
-          <span class="stat-number" id="totalVisitors">0</span>
-          <span class="stat-label">Total Visitors</span>
-        </div>
-        <div class="stat-box" style="transform:rotate(1deg);">
-          <span class="stat-number" style="color:#3498db;" id="avgTime">0</span>
-          <span class="stat-label">Avg. Time (min)</span>
-        </div>
-        <div class="stat-box" style="transform:rotate(-1deg);">
-          <span class="stat-number" style="color:#ffeb3b;text-shadow:2px 2px 0 #000;" id="pageViews">0</span>
-          <span class="stat-label">Page Views</span>
-        </div>
-      </div>
-
-      <div class="sketch-box" style="max-width:900px;margin:60px auto;">
-        <canvas id="trafficChart" width="400" height="200"></canvas>
-        <p style="margin-top:25px;font-weight:700;font-size:1.2em;">
-          <span class="yellow-bg">Real-Time Data Simulation</span>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
   <section class="contact-section">
-    <div class="contact-content" style="text-align:center;">
-      <h2 class="contact-title">
-        <span style="color:#ffeb3b;">LET'S</span><br>
-        <span style="text-decoration:line-through;text-decoration-thickness:8px;color:#e74c3c;">ANALYZE</span><br>
-        <span style="color:#fff;">CREATE</span>
-      </h2>
-      <a href="https://www.instagram.com/dsl.development/" target="_blank" class="contact-btn">@DSL.DEV</a>
-      <p style="margin-top:80px;font-size:1.6em;letter-spacing:0.2em;font-weight:700;">
-        <span class="box-outline" style="border-color:#fff;color:#fff;background:transparent;">DATA + DESIGN = IMPACT</span>
-      </p>
+    <div style="text-align:center;">
+      <h2 class="contact-title">Let’s Create</h2>
+      <a class="contact-btn" href="https://www.instagram.com/dsl.development/" target="_blank">@DSL.DEV</a>
     </div>
   </section>
 
-  <!-- MAP -->
   <section class="map-section">
-    <div class="map-label">
-      IRVING<br><span style="font-size:0.6em;">TEXAS ★</span>
-    </div>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107187.51589392515!2d-97.00892773828125!3d32.86397705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e825b0f06cac7%3A0x960dca3b0dc0c740!2sIrving%2C%20TX!5e0!3m2!1sen!2sus!4v1234567890"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107187.51589392515!2d-97.00892773828125!3d32.86397705"></iframe>
   </section>
 
   <script>
-    // Card animations
-    document.querySelectorAll('.card-basquiat').forEach((card, index) => {
-      const randomRotation = (Math.random() - 0.5) * 3;
-      card.style.transform = `rotate(${randomRotation}deg)`;
-      card.style.animationDelay = `${index * 0.1}s`;
-    });
+    const steps = ["Collecting Signals","Structuring Data","Generating Insight"];
+    let i = 0;
+    const text = document.getElementById("loadingText");
+    const bar = document.getElementById("loadingBar");
 
-    // Animated counters
-    function animateCounter(id, target, duration = 2000) {
-      const element = document.getElementById(id);
-      const start = 0;
-      const increment = target / (duration / 16);
-      let current = start;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          element.textContent = Math.floor(target);
-          clearInterval(timer);
-        } else {
-          element.textContent = Math.floor(current);
-        }
-      }, 16);
+    function advance() {
+      i++;
+      if (i < steps.length) {
+        text.textContent = steps[i];
+        bar.style.width = `${(i + 1) / steps.length * 100}%`;
+        setTimeout(advance, 600);
+      } else {
+        setTimeout(() => {
+          document.getElementById("loading-screen").classList.add("hidden");
+        }, 500);
+      }
     }
 
-    // Trigger counters when section is visible
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter('totalVisitors', 1547);
-          animateCounter('avgTime', 4.2);
-          animateCounter('pageViews', 3894);
-          observer.unobserve(entry.target);
-        }
-      });
-    });
-
-    observer.observe(document.getElementById('data-section'));
-
-    // Live analytics chart
-    const ctx = document.getElementById('trafficChart').getContext('2d');
-    const trafficData = [120, 190, 150, 220, 180, 240, 300];
-    const trafficChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-        datasets: [{
-          label: 'Visitors per Day',
-          data: trafficData,
-          borderColor: '#e74c3c',
-          backgroundColor: 'rgba(231,76,60,0.2)',
-          borderWidth: 4,
-          fill: true,
-          tension: 0.4,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          pointBackgroundColor: '#fff',
-          pointBorderColor: '#e74c3c',
-          pointBorderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        animation: {
-          duration: 1000,
-          easing: 'easeInOutQuart'
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#000',
-              font: { family: 'Courier Prime', size: 16, weight: 'bold' },
-              padding: 20
-            }
-          },
-          tooltip: {
-            backgroundColor: '#000',
-            titleColor: '#ffeb3b',
-            bodyColor: '#fff',
-            borderColor: '#ffeb3b',
-            borderWidth: 2,
-            padding: 12,
-            displayColors: false,
-            titleFont: { family: 'Courier Prime', size: 14, weight: 'bold' },
-            bodyFont: { family: 'Courier Prime', size: 13 }
-          }
-        },
-        scales: {
-          x: {
-            ticks: { color: '#000', font: { family: 'Courier Prime', size: 13 } },
-            grid: { color: '#00000015' }
-          },
-          y: {
-            ticks: { color: '#000', font: { family: 'Courier Prime', size: 13 } },
-            grid: { color: '#00000015' }
-          }
-        }
-      }
-    });
-
-    setInterval(() => {
-      trafficData.shift();
-      trafficData.push(Math.floor(150 + Math.random() * 150));
-      trafficChart.update();
-    }, 3000);
-
-    
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+    window.addEventListener("load", () => {
+      bar.style.width = "33%";
+      setTimeout(advance, 600);
     });
   </script>
 </body>
