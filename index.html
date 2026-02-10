@@ -22,9 +22,7 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: Inter, system-ui, sans-serif;
@@ -33,18 +31,13 @@ body {
   line-height: 1.6;
 }
 
-a {
-  color: var(--fg);
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
 .container {
   max-width: 1200px;
   margin: auto;
   padding: 0 32px;
 }
-
-/* ---------- LOADING ---------- */
 
 #loader {
   position: fixed;
@@ -68,8 +61,6 @@ a {
   pointer-events: none;
   transition: opacity 0.8s ease;
 }
-
-/* ---------- HEADER ---------- */
 
 header {
   position: sticky;
@@ -96,19 +87,30 @@ header {
   margin-left: 32px;
   font-size: 0.85rem;
   color: var(--muted);
+  transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: var(--fg);
-}
-
-/* ---------- HERO ---------- */
+.nav-links a:hover { color: var(--fg); }
 
 .hero {
   min-height: 90vh;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--border);
+}
+
+.hero h1 span {
+  display: block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroReveal 0.8s ease forwards;
+}
+
+.hero h1 span:nth-child(2) { animation-delay: 0.15s; }
+.hero h1 span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes heroReveal {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero h1 {
@@ -122,9 +124,13 @@ header {
   margin-top: 24px;
   max-width: 600px;
   color: var(--muted);
+  animation: fadeUp 1s ease 0.6s forwards;
+  opacity: 0;
 }
 
-/* ---------- GRID SECTIONS ---------- */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .section {
   padding: 120px 0;
@@ -155,18 +161,17 @@ header {
   border: 1px solid var(--border);
   padding: 32px;
   background: linear-gradient(180deg, #0b0d10, #0f172a);
+  transition: transform 0.4s ease, border-color 0.4s ease;
 }
 
-.card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
 }
 
-.card p {
-  color: var(--muted);
-}
+.card h3 { margin-bottom: 12px; }
 
-/* ---------- DATA PANEL ---------- */
+.card p { color: var(--muted); }
 
 .data-panel {
   display: grid;
@@ -183,17 +188,13 @@ header {
 .metric span {
   font-size: 2.5rem;
   font-weight: 700;
-  display: block;
 }
 
 .metric label {
   font-size: 0.8rem;
   color: var(--muted);
-  text-transform: uppercase;
   letter-spacing: 0.1em;
 }
-
-/* ---------- MAP ---------- */
 
 .map {
   height: 400px;
@@ -208,7 +209,40 @@ header {
   filter: grayscale(1) contrast(1.1);
 }
 
-/* ---------- FOOTER ---------- */
+#contact {
+  position: relative;
+  overflow: hidden;
+}
+
+#contact::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(34,211,238,0.08), transparent 70%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 16px 36px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.cta:hover {
+  background: var(--accent);
+  color: #000;
+}
 
 footer {
   padding: 80px 0;
@@ -220,12 +254,6 @@ footer {
   gap: 32px;
   color: var(--muted);
 }
-
-footer strong {
-  color: var(--fg);
-}
-
-/* ---------- MOTION ---------- */
 
 .reveal {
   opacity: 0;
@@ -239,10 +267,7 @@ footer strong {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none;
-    transition: none;
-  }
+  * { animation: none; transition: none; }
 }
 </style>
 </head>
@@ -267,10 +292,13 @@ footer strong {
 
 <section class="hero">
   <div class="container">
-    <h1>Engineering clarity from complex data systems.</h1>
+    <h1>
+      <span>Engineering clarity</span>
+      <span>from complex</span>
+      <span>data systems.</span>
+    </h1>
     <p>
-      DSL Development builds data-driven platforms for local and enterprise-scale
-      decision making.
+      DSL Development builds data-driven platforms for local and enterprise-scale decision making.
     </p>
   </div>
 </section>
@@ -279,9 +307,7 @@ footer strong {
   <div class="container reveal">
     <div class="section-title">Mission</div>
     <h2>Design is not aesthetic. It is operational.</h2>
-    <p class="muted">
-      We treat interfaces as analytical instruments—built to inform, not impress.
-    </p>
+    <p class="muted">Interfaces are analytical instruments.</p>
   </div>
 </section>
 
@@ -289,24 +315,11 @@ footer strong {
   <div class="container reveal">
     <div class="section-title">Capabilities</div>
     <h2>From raw signals to operational insight.</h2>
-
     <div class="grid">
-      <div class="card">
-        <h3>Web Platforms</h3>
-        <p>High-performance interfaces designed for clarity and longevity.</p>
-      </div>
-      <div class="card">
-        <h3>Analytics</h3>
-        <p>Behavioral, operational, and performance analytics pipelines.</p>
-      </div>
-      <div class="card">
-        <h3>Visualization</h3>
-        <p>Dashboards that reflect reality, not decoration.</p>
-      </div>
-      <div class="card">
-        <h3>Optimization</h3>
-        <p>Iterative experimentation and measurable improvement.</p>
-      </div>
+      <div class="card"><h3>Web Platforms</h3><p>Clarity-first engineering.</p></div>
+      <div class="card"><h3>Analytics</h3><p>Measured decision pipelines.</p></div>
+      <div class="card"><h3>Visualization</h3><p>Truth over decoration.</p></div>
+      <div class="card"><h3>Optimization</h3><p>Iterative system refinement.</p></div>
     </div>
   </div>
 </section>
@@ -315,22 +328,11 @@ footer strong {
   <div class="container reveal">
     <div class="section-title">Live Metrics</div>
     <h2>Systems are measured, not assumed.</h2>
-
     <div class="data-panel">
-      <div class="metric">
-        <span id="m1">0</span>
-        <label>Sessions</label>
-      </div>
-      <div class="metric">
-        <span id="m2">0</span>
-        <label>Avg Duration</label>
-      </div>
-      <div class="metric">
-        <span id="m3">0</span>
-        <label>Page Views</label>
-      </div>
+      <div class="metric"><span id="m1">0</span><label>Sessions</label></div>
+      <div class="metric"><span id="m2">0</span><label>Avg Duration</label></div>
+      <div class="metric"><span id="m3">0</span><label>Page Views</label></div>
     </div>
-
     <div class="map">
       <iframe src="https://www.google.com/maps?q=Irving,+TX&output=embed"></iframe>
     </div>
@@ -341,73 +343,37 @@ footer strong {
   <div class="container reveal">
     <div class="section-title">Contact</div>
     <h2>Let’s build systems that last.</h2>
-    <p>
-      <strong>Dallas • Irving • Texas</strong><br>
-      instagram.com/dsl.development
-    </p>
+    <p><strong>Dallas • Irving • Texas</strong></p>
+    <a class="cta" href="mailto:divyanshusomasekhar1@gmail.com?subject=Request%20a%20Quote">
+      Request a Quote
+    </a>
   </div>
 </section>
 
 <footer>
   <div class="container footer-grid">
-    <div>
-      <strong>DSL Development</strong><br>
-      Data-Driven Systems
-    </div>
-    <div>
-      Stack<br>
-      HTML · CSS · JavaScript
-    </div>
-    <div>
-      Built for clarity, not noise.
-    </div>
+    <div><strong>DSL Development</strong><br>Data-Driven Systems</div>
+    <div>HTML · CSS · JavaScript</div>
+    <div>Built for clarity.</div>
   </div>
 </footer>
 
 <script>
-const loaderSteps = ["Initializing Systems","Collecting Signals","Structuring Data","Generating Insight"];
-let step = 0;
-const loaderText = document.getElementById("loaderText");
+const steps=["Initializing Systems","Collecting Signals","Structuring Data","Generating Insight"];
+let i=0;
+const t=document.getElementById("loaderText");
+const timer=setInterval(()=>{i++;if(i<steps.length){t.textContent=steps[i]}else{document.getElementById("loader").classList.add("hidden");clearInterval(timer)}},700);
 
-setInterval(() => {
-  step++;
-  if (step < loaderSteps.length) {
-    loaderText.textContent = loaderSteps[step];
-  } else {
-    document.getElementById("loader").classList.add("hidden");
-  }
-}, 700);
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add("visible")),{threshold:.2});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
 
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add("visible");
-  });
-}, { threshold: 0.2 });
-
-document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
-
-function animate(id, target) {
-  let val = 0;
-  const el = document.getElementById(id);
-  const interval = setInterval(() => {
-    val += target / 60;
-    if (val >= target) {
-      el.textContent = Math.floor(target);
-      clearInterval(interval);
-    } else {
-      el.textContent = Math.floor(val);
-    }
-  }, 16);
-}
-
-setTimeout(() => {
-  animate("m1", 1547);
-  animate("m2", 4.2);
-  animate("m3", 3894);
-}, 2000);
+function count(id,target){let v=0;const el=document.getElementById(id);const s=setInterval(()=>{v+=target/60;if(v>=target){el.textContent=Math.floor(target);clearInterval(s)}else{el.textContent=Math.floor(v)}},16)}
+setTimeout(()=>{count("m1",1547);count("m2",4.2);count("m3",3894)},1800);
 </script>
 
 </body>
 </html>
+
+
 
 
