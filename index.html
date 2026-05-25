@@ -1818,6 +1818,179 @@
   .scroll-progress .bar { animation: none !important; transition: none !important; }
 }
 
+/* ============== MOBILE POLISH PASS ============== */
+/* Tablet (≤900px) */
+@media (max-width: 900px) {
+  :root { --pad: 28px; }
+
+  /* HEADER */
+  .nav { padding: 14px var(--pad); }
+  .brand { font-size: 1rem; gap: 8px; }
+  .brand-mark { width: 20px; height: 20px; font-size: 1.1rem; }
+  .nav-tools { gap: 8px; }
+  .icon-btn { width: 40px; height: 40px; }
+
+  /* HERO */
+  .hero { padding: 110px var(--pad) 60px; min-height: auto; }
+  .hero-title { font-size: clamp(2.6rem, 8.4vw, 4.6rem); margin-bottom: 22px; }
+  .hero-eyebrow { margin-bottom: 22px; }
+  .hero-lead { font-size: 1rem; margin-bottom: 28px; }
+  .hero-stage { max-width: 440px; }
+
+  /* SECTIONS */
+  .section,
+  .pillars-section,
+  .plans-section { padding: 80px var(--pad); }
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .section-head .left { max-width: 100%; }
+  .section-sub { max-width: 100%; }
+
+  /* PLANS CARD */
+  .plans-card { padding: 32px 28px; }
+
+  /* METRICS */
+  .metrics { padding: 56px var(--pad); }
+
+  /* BAND CTA */
+  .band-cta { padding: 40px var(--pad); }
+  .band-cta-left { padding: 40px 32px; }
+  .band-cta-form { flex-direction: column; align-items: stretch; }
+  .band-cta-form input,
+  .band-cta-form button { width: 100%; }
+  .band-cta-right { display: none; }
+
+  /* FOOTER */
+  footer { padding: 72px var(--pad) 56px; }
+}
+
+/* Phone (≤640px) */
+@media (max-width: 640px) {
+  /* HEADER — hide account icon, keep menu */
+  .nav-tools .icon-btn[aria-label="Account"] { display: none; }
+
+  /* HERO */
+  .hero { padding: 96px var(--pad) 40px; }
+  .hero-eyebrow {
+    font-size: 0.66rem;
+    margin-bottom: 18px;
+    letter-spacing: 0.14em;
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 9.6vw, 3.6rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  .hero-lead { font-size: 0.96rem; margin-bottom: 26px; }
+  .hero-ctas { width: 100%; gap: 10px; }
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-ghost {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    min-width: 0;
+  }
+  .hero-stage { display: none; }
+
+  /* SECTIONS */
+  .section,
+  .pillars-section,
+  .plans-section,
+  .metrics { padding: 60px var(--pad); }
+  .section-title { font-size: clamp(1.7rem, 7.6vw, 2.4rem); }
+
+  /* BENTO */
+  .bento .tile { padding: 24px 22px; min-height: 220px; }
+
+  /* PILLARS */
+  .pillars-grid .pillar { padding: 24px 22px; min-height: 220px; }
+  .pillar.wide { flex-direction: column; align-items: flex-start; gap: 18px; padding: 28px 22px; }
+
+  /* SERVICE CARDS */
+  .svc { padding: 24px 22px; min-height: 360px; }
+
+  /* PLANS */
+  .plans-card { padding: 26px 22px; }
+
+  /* METRICS */
+  .metric { padding: 22px 20px; }
+  .metric .num { font-size: clamp(1.8rem, 9.2vw, 2.6rem); }
+  .metric .lbl { font-size: 0.72rem; }
+
+  /* BAND CTA */
+  .band-cta-left { padding: 32px 24px; }
+  .band-cta-title { font-size: clamp(1.5rem, 6.6vw, 2.1rem); }
+  .band-cta-sub { font-size: 0.96rem; }
+  .band-cta-form input,
+  .band-cta-form button { padding: 14px 18px; font-size: 0.94rem; }
+
+  /* FOOTER */
+  .footer-grid { gap: 36px; }
+  footer { padding: 56px var(--pad) 48px; }
+
+  /* MARQUEE — softer cadence on small */
+  .marquee-track { font-size: 1.25rem; gap: 44px; }
+  .marquee-track span { gap: 44px; }
+
+  /* SIDE TAB — already hidden, keep */
+  .side-tab { display: none; }
+
+  /* FLOAT CTA — slimmer pill */
+  .float-cta { padding: 8px 12px 8px 8px; gap: 10px; }
+  .float-cta-thumb { width: 38px; height: 38px; }
+  .float-cta-label { font-size: 0.74rem; line-height: 1.1; }
+  .float-cta-plus { width: 28px; height: 28px; }
+
+  /* MEGA MENU */
+  .mega-top { padding: 18px var(--pad); }
+  .mega-top-right { gap: 8px; }
+  .mega-cta { padding: 10px 14px; font-size: 0.78rem; }
+  .mega-search, .mega-close { width: 38px; height: 38px; }
+  .mega-grid { padding: 28px var(--pad) 56px; }
+  .mega-nav .top-link { font-size: 1.6rem; }
+  .mega-nav .sub-link { font-size: 1.1rem; }
+}
+
+/* Small phone (≤420px) */
+@media (max-width: 420px) {
+  :root { --pad: 20px; }
+  .nav { padding: 12px var(--pad); }
+  .brand span:last-child { font-size: 0.92rem; }
+
+  .hero-title { font-size: clamp(1.9rem, 10.2vw, 2.8rem); }
+  .hero-lead { font-size: 0.92rem; }
+
+  .section-title { font-size: clamp(1.45rem, 8.2vw, 2rem); }
+  .marquee-track { font-size: 1.05rem; gap: 32px; }
+  .marquee-track span { gap: 32px; }
+
+  .float-cta-label { display: none; }
+  .float-cta { padding: 6px 8px 6px 6px; }
+  .float-cta-thumb { width: 34px; height: 34px; }
+
+  .band-cta-form input,
+  .band-cta-form button { padding: 13px 16px; font-size: 0.9rem; }
+}
+
+/* Touch target minimums on coarse pointers */
+@media (max-width: 900px) and (pointer: coarse) {
+  .nav-links a, .mega-nav a, .footer-col a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .icon-btn, .menu-btn,
+  .mega-search, .mega-close { min-width: 44px; min-height: 44px; }
+  .btn-primary, .btn-ghost, .plans-cta, .band-cta-form button {
+    min-height: 48px;
+  }
+}
+
   </style>
 </head>
 <body>

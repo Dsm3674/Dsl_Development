@@ -1635,3 +1635,152 @@
   .side-tab, .hero-spotlight, .svc-hero-spotlight,
   .scroll-progress .bar { animation: none !important; transition: none !important; }
 }
+
+/* ============== MOBILE POLISH PASS ============== */
+/* Tablet (≤900px) */
+@media (max-width: 900px) {
+  :root { --pad: 28px; }
+
+  /* HEADER */
+  .nav { padding: 14px var(--pad); }
+  .brand { font-size: 1rem; gap: 8px; }
+  .brand-mark { width: 20px; height: 20px; font-size: 1.1rem; }
+  .nav-tools { gap: 8px; }
+  .icon-btn { width: 40px; height: 40px; }
+
+  /* SERVICE HERO */
+  .svc-hero { padding: 110px var(--pad) 56px; }
+  .svc-hero-grid { gap: 40px; }
+  .svc-title { font-size: clamp(2.4rem, 8vw, 4rem); }
+  .svc-hero-lead { font-size: 1rem; }
+  .svc-hero-art { max-width: 380px; }
+
+  /* DELIVERABLES / TIMELINE / EXPECT / PRICING */
+  .deliverables, .timeline, .expect, .svc-pricing { padding: 70px var(--pad); }
+  .deliv { padding: 26px 22px; }
+  .expect-card { padding: 26px 22px; }
+  .svc-plan { padding: 28px 22px; }
+
+  /* BAND CTA */
+  .band-cta { padding: 40px var(--pad); }
+  .band-cta-left { padding: 40px 32px; }
+  .band-cta-form { flex-direction: column; align-items: stretch; }
+  .band-cta-form input,
+  .band-cta-form button { width: 100%; }
+  .band-cta-right { display: none; }
+
+  /* FOOTER */
+  .footer { padding: 72px var(--pad) 56px; }
+}
+
+/* Phone (≤640px) */
+@media (max-width: 640px) {
+  .nav-tools .icon-btn[aria-label="Account"] { display: none; }
+
+  /* SERVICE HERO */
+  .svc-hero { padding: 96px var(--pad) 44px; }
+  .svc-hero-eyebrow { font-size: 0.66rem; margin-bottom: 18px; letter-spacing: 0.14em; }
+  .svc-title { font-size: clamp(2rem, 9.2vw, 3.2rem); letter-spacing: -0.03em; margin-bottom: 18px; }
+  .svc-hero-lead { font-size: 0.96rem; margin-bottom: 24px; }
+  .svc-hero-ctas { width: 100%; gap: 10px; flex-wrap: wrap; }
+  .svc-hero-ctas .btn-primary,
+  .svc-hero-ctas .btn-ghost,
+  .svc-hero-ctas .svc-cta {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    min-width: 0;
+  }
+  .svc-hero-art { display: none; }
+
+  /* SECTIONS */
+  .deliverables, .timeline, .expect, .svc-pricing { padding: 56px var(--pad); }
+  .deliv-title, .timeline-title, .expect-title, .svc-pricing-title {
+    font-size: clamp(1.7rem, 7.4vw, 2.4rem);
+  }
+
+  /* DELIVERABLES + EXPECT cards */
+  .deliv { padding: 22px 20px; }
+  .expect-card { padding: 22px 20px; }
+  .expect-thumb { aspect-ratio: 16 / 10; }
+
+  /* TIMELINE */
+  .step { padding-left: 24px; }
+  .step::before { left: 0; }
+  .step h4 { font-size: 1rem; }
+
+  /* PRICING */
+  .svc-plan { padding: 24px 20px; }
+  .svc-plan .plan-price { font-size: 2.2rem; }
+  .sat { padding: 8px 10px; }
+
+  /* BAND CTA */
+  .band-cta-left { padding: 32px 24px; }
+  .band-cta-title { font-size: clamp(1.5rem, 6.6vw, 2.1rem); }
+  .band-cta-sub { font-size: 0.96rem; }
+  .band-cta-form input,
+  .band-cta-form button { padding: 14px 18px; font-size: 0.94rem; }
+
+  /* FOOTER */
+  .footer-grid { gap: 36px; }
+  .footer { padding: 56px var(--pad) 48px; }
+
+  /* MARQUEE */
+  .marquee-track { font-size: 1.25rem; gap: 44px; }
+  .marquee-track span { gap: 44px; }
+
+  /* SIDE TAB hidden on phones */
+  .side-tab { display: none; }
+
+  /* FLOAT CTA */
+  .float-cta { padding: 8px 12px 8px 8px; gap: 10px; }
+  .float-cta-thumb { width: 38px; height: 38px; }
+  .float-cta-label { font-size: 0.74rem; line-height: 1.1; }
+  .float-cta-plus { width: 28px; height: 28px; }
+
+  /* MEGA MENU */
+  .mega-top { padding: 18px var(--pad); }
+  .mega-top-right { gap: 8px; }
+  .mega-cta { padding: 10px 14px; font-size: 0.78rem; }
+  .mega-search, .mega-close { width: 38px; height: 38px; }
+  .mega-grid { padding: 28px var(--pad) 56px; }
+  .mega-nav .top-link { font-size: 1.6rem; }
+  .mega-nav .sub-link { font-size: 1.1rem; }
+}
+
+/* Small phone (≤420px) */
+@media (max-width: 420px) {
+  :root { --pad: 20px; }
+  .nav { padding: 12px var(--pad); }
+  .brand span:last-child { font-size: 0.92rem; }
+
+  .svc-title { font-size: clamp(1.8rem, 9.8vw, 2.6rem); }
+  .svc-hero-lead { font-size: 0.92rem; }
+  .deliv-title, .timeline-title, .expect-title, .svc-pricing-title {
+    font-size: clamp(1.4rem, 8vw, 1.9rem);
+  }
+  .marquee-track { font-size: 1.05rem; gap: 32px; }
+  .marquee-track span { gap: 32px; }
+
+  .float-cta-label { display: none; }
+  .float-cta { padding: 6px 8px 6px 6px; }
+  .float-cta-thumb { width: 34px; height: 34px; }
+
+  .band-cta-form input,
+  .band-cta-form button { padding: 13px 16px; font-size: 0.9rem; }
+}
+
+/* Touch target minimums on coarse pointers */
+@media (max-width: 900px) and (pointer: coarse) {
+  .nav-links a, .mega-nav a, .footer-col a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .icon-btn, .menu-btn,
+  .mega-search, .mega-close { min-width: 44px; min-height: 44px; }
+  .btn-primary, .btn-ghost, .svc-cta, .band-cta-form button {
+    min-height: 48px;
+  }
+}
